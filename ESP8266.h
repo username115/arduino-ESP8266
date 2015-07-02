@@ -10,7 +10,7 @@
 #define ESP8266_SINGLE_CLIENT 5
 
 enum ESP8266WifiMode {
-    ESP8266_WIFI_STATION = 1,
+    ESP8266_WIFI_STATION_CLIENT = 1,
     ESP8266_WIFI_ACCESSPOINT,
     ESP8266_WIFI_BOTH
 };
@@ -64,7 +64,12 @@ struct ESP8266Station {
     byte mac[6];
 };
 
-//TODO: ESP8266AccessPoint struct
+struct ESP8266APInfo {
+	ESP8266Encryption encType;
+	char ssid[32];
+	int sigStrengthDB;
+	byte mac[6];
+};
 
 class ESP8266 : public Stream
 {
@@ -86,7 +91,7 @@ public:
     // Get version info
     ESP8266CommandStatus getVersion(char* buffer, int length);
 
-    // Enter deep-sleep mode
+    // Enter deep-sleep mode - Hardware has to support deep-sleep wake up (XPD_DCDC connects to EXT_RSTB with 0R).
     ESP8266CommandStatus deepSleep(unsigned long time);
 
     // Set baudrate to the given value
@@ -105,11 +110,10 @@ public:
     ESP8266CommandStatus joinAP(char* ssid, char* password);
 
     // Get the current access point
-    ESP8266CommandStatus getAP(char* ssid);
+    ESP8266CommandStatus getAP(char* ssid, int length);
 
     // List available APs
-    //TODO
-    //ESP8266CommandStatus listAP();
+    ESP8266CommandStatus listAP(ESP8266APInfo* accessPoints, unsigned int& count, const unsigned int max);
 
     // List available APs matching criteria
     //TODO
