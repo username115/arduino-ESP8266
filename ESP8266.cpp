@@ -251,7 +251,7 @@ ESP8266CommandStatus ESP8266::setDHCP(ESP8266WifiMode mode, bool enable)
     _serial->print(F("AT+CWDHCP="));
 
     switch (mode) {
-    case ESP8266_WIFI_STATION_CLIENT:
+    case ESP8266_WIFI_STATION:
         _serial->print(1);
         break;
 
@@ -279,7 +279,7 @@ ESP8266CommandStatus ESP8266::setMAC(ESP8266WifiMode mode, byte mac[6])
     _serial->print(F("AT+CIP"));
 
     switch (mode) {
-    case ESP8266_WIFI_STATION_CLIENT:
+    case ESP8266_WIFI_STATION:
         _serial->print(F("STA"));
         break;
 
@@ -309,7 +309,7 @@ ESP8266CommandStatus ESP8266::getMAC(ESP8266WifiMode mode, byte mac[6])
     clear();
 
     switch (mode) {
-    case ESP8266_WIFI_STATION_CLIENT:
+    case ESP8266_WIFI_STATION:
         _serial->println(F("AT+CIPSTAMAC?"));
 
         if (!find(F("+CIPSTAMAC:\""), 20))
@@ -340,7 +340,7 @@ ESP8266CommandStatus ESP8266::setIP(ESP8266WifiMode mode, IPAddress& ip)
     _serial->print(F("AT+CIP"));
 
     switch (mode) {
-    case ESP8266_WIFI_STATION_CLIENT:
+    case ESP8266_WIFI_STATION:
         _serial->print(F("STA"));
         break;
 
@@ -363,7 +363,7 @@ ESP8266CommandStatus ESP8266::getIP(ESP8266WifiMode mode, IPAddress& ip)
     clear();
 
     switch (mode) {
-    case ESP8266_WIFI_STATION_CLIENT:
+    case ESP8266_WIFI_STATION:
         _serial->println(F("AT+CIPSTA?"));
 
         if (!find(F("+CIPSTA:\""), 20))
