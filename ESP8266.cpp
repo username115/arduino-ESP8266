@@ -364,10 +364,10 @@ ESP8266CommandStatus ESP8266::getIP(ESP8266WifiMode mode, IPAddress& ip)
 
     switch (mode) {
     case ESP8266_WIFI_STATION:
-        _serial->println(F("AT+CIPSTA?"));
+        _serial->println(F("AT+CIFSR"));
 
-        if (!find(F("+CIPSTA:\""), 20))
-            return ESP8266_COMMAND_TIMEOUT;
+        //if (!find(F("+CIFSR:\""), 20))
+         //   return ESP8266_COMMAND_TIMEOUT;
 
         break;
 
